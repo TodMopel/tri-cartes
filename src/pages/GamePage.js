@@ -258,6 +258,7 @@ const GamePage = ({ jobListData }) => {
         <div
             className="unselectable game-page background-grid"
             onMouseMove={handleMouseMove}
+            onTouchMove={handleMouseMove}
         >
             {gameData.jobList.length > -1 && (
                 <CardPile

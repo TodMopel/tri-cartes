@@ -74,6 +74,7 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
     return (
         <div
             onMouseDown={handleMouseDown}
+            onTouchStart={handleMouseDown}
             style={{
                 cursor: isDragging ? 'grabbing' : 'grab',
                 position: 'absolute',
