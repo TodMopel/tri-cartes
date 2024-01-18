@@ -1,6 +1,6 @@
 {
     "homepage": "https://todmopel.github.io/tri-cartes",
-    "name": "jeu-de-tri-de-cartes",
+    "name": "tri-cartes",
     "version": "0.1.0",
     "private": false,
     "dependencies": {
