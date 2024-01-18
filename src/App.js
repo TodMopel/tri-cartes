@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 
@@ -12,7 +12,7 @@ function App() {
 
     return (
         <Router>
-            <Switch>
+            <Routes>
                 <Route
                     path="/game"
                     element={<GamePage jobListData={jobListData} />}
@@ -21,7 +21,7 @@ function App() {
                     path="/"
                     element={<HomePage onGoogleSheetSubmit={handleGoogleSheetSubmit} />}
                 />
-            </Switch>
+            </Routes>
         </Router>
     );
 }
