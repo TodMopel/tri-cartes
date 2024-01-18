@@ -14,11 +14,11 @@ function App() {
         <Router>
             <Routes>
                 <Route
-                    path="/game"
+                    path="/tri-cartes/game"
                     element={<GamePage jobListData={jobListData} />}
                 />
                 <Route
-                    path="/"
+                    path="/tri-cartes/"
                     element={<HomePage onGoogleSheetSubmit={handleGoogleSheetSubmit} />}
                 />
             </Routes>
