@@ -63,7 +63,7 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
                 <h1>{config.home.title}</h1>
                 <h3>{config.home.subTitle}</h3>
                 <div className="ui-card ui-button-container">
-                    <Link to="/game" className="button button-normal">
+                    <Link to="/tri-cartes/game" className="button button-normal">
                         {config.home.buttonStart}
                     </Link>
                 </div>
