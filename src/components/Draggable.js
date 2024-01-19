@@ -5,10 +5,11 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
     const [dragStartX, setDragStartX] = useState(0);
     const [dragStartY, setDragStartY] = useState(0);
     const [currentOffset, setCurrentOffset] = useState({ x: 0, y: 0 });
+    const [scale, setScale] = useState(1);
 
     const targetRef = useRef(null);
 
-    const borderSize = 30;
+    const mapBorderSize = 30;
 
     useEffect(() => {
         const handleMove = (e) => {
@@ -19,8 +20,8 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
                 const deltaX = clientX - dragStartX + currentOffset.x;
                 const deltaY = clientY - dragStartY + currentOffset.y;
 
-                const clampedX = Math.min(Math.max(deltaX, -initialPosition.x + borderSize), window.innerWidth - size.x - initialPosition.x - borderSize);
-                const clampedY = Math.min(Math.max(deltaY, -initialPosition.y + borderSize), window.innerHeight - size.y - initialPosition.y - borderSize);
+                const clampedX = Math.min(Math.max(deltaX, -initialPosition.x + mapBorderSize), window.innerWidth - size.x - initialPosition.x - mapBorderSize);
+                const clampedY = Math.min(Math.max(deltaY, -initialPosition.y + mapBorderSize), window.innerHeight - size.y - initialPosition.y - mapBorderSize);
 
                 const transformValue = `translate3d(${clampedX}px, ${clampedY}px, 0)`;
                 targetRef.current.style.transform = transformValue;
@@ -32,6 +33,7 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
         const handleUp = () => {
             setIsDragging(false);
+            setScale(1);
 
             if (onDragEnd)
                 onDragEnd();
@@ -63,6 +65,8 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
         setDragStartY(e.touches ? e.touches[0].clientY : e.clientY);
         targetRef.current = e.currentTarget;
 
+        setScale(1.1);
+
         const currentTransform = targetRef.current.style.transform;
         const translateValues = currentTransform.match(/translate3d\(([^)]+)\)/);
 
@@ -91,6 +95,9 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
                 cursor: isDragging ? 'grabbing' : 'grab',
                 position: 'absolute',
                 zIndex: zIndexOrder,
+
+                transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+                transform: `scale(${scale})`,
             }}
         >
             {children}

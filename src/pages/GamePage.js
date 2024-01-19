@@ -55,7 +55,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     const handleCardDropOnDroppable = (item) => {
         const droppedCard = gameData.cardList[gameData.lastSelectedCardIndex];
 
-        console.log(`Card ${droppedCard.text} dropped inside : ${item} `);
+        //console.log(`Card ${droppedCard.text} dropped inside : ${item} `);
 
         droppedCard.isActive = false;
         if (item === "Discard") {

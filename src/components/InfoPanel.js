@@ -39,7 +39,7 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
                 x: rect.left + 6,
                 y: rect.top + 35,
             };
-            console.log(droppedCard.text);
+            //console.log(droppedCard.text);
             onCardRestored(position, droppedCard)
         }
     };
