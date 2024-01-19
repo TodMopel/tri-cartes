@@ -30,7 +30,7 @@
         size: ({ x: 130, y: 140 }),
     },
     category: {
-        baseTitle: "catégorie ",
+        baseTitle: "catégorie",
         createButtonText: "créer catégorie",
         categoryColors: [
             '#FFD1DC', '#AED6F1', '#C3E6CB', '#FFFACD', '#E6E6FA',
