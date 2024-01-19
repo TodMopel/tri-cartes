@@ -35,6 +35,7 @@
 .App {
     font-family: 'No Serif', sans-serif;
     text-align: center;
+    overflow:hidden;
 }
 
 .home-page::before,
