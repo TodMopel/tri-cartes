@@ -38,9 +38,10 @@
         baseTitle: "catégorie",
         createButtonText: "créer catégorie",
         categoryColors: [
-            '#FFD1DC', '#AED6F1', '#C3E6CB', '#FFFACD', '#E6E6FA',
-            '#FFA07A', '#87CEEB', '#98FB98', '#FFD700', '#DDA0DD',
-            '#FFB6C1', '#B0E0E6', '#98FB98', '#FFE4C4', '#D8BFD8'],
+            '#D4A5A5', '#A6C0CE', '#B5CEA8', '#DDD189', '#C1BFE1',
+            '#F3A8A8', '#92CCEA', '#B3E2B8', '#EFD272', '#D4BEDB',
+            '#E79999', '#89B9CC', '#A9E6A1', '#FBDB88', '#D0B3D5'
+        ],
         size: ({ x: 130, y: 150 }),
     },
 };
