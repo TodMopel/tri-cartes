@@ -44,7 +44,7 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
         if (isDragging) {
             window.addEventListener('mousemove', handleMove);
-            window.addEventListener('touchmove', handleMove);
+            window.addEventListener('touchmove', handleTouchMove, { passive: false });
             window.addEventListener('mouseup', handleUp);
             window.addEventListener('touchend', handleUp);
         }
