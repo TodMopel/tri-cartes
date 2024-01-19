@@ -60,9 +60,18 @@
     height: 100vh;
 }
 
+body, html {
+    overflow: hidden;
+    height: 100vh;
+}
+
 .home-page,
 .result-page {
     height: 100vh;
+}
+
+.game-page {
+    overflow: hidden;
 }
 
 .center-content {

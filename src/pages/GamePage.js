@@ -253,12 +253,12 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
         setMouseCoordinates({ x: mouseX, y: mouseY });
     };
-    //const handleTouchMove = (e) => {
-    //    const touchX = e.touches[0].clientX;
-    //    const touchY = e.touches[0].clientY;
+    const handleTouchMove = (e) => {
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
 
-    //    setMouseCoordinates({ x: touchX, y: touchY });
-    //};
+        setMouseCoordinates({ x: touchX, y: touchY });
+    };
 
     const updateCategoryText = (categoryIndex, newText) => {
         setGameData((prevGameData) => {
@@ -287,7 +287,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
         <div
             className="unselectable game-page background-grid"
             onMouseMove={handleMouseMove}
-            //onTouchMove={handleTouchMove}
+            onTouchMove={handleTouchMove}
         >
             {gameData.jobList.length > -1 && (
                 <CardPile
