@@ -47,31 +47,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
             if (onDragEnd) onDragEnd();
         };
 
-        const handleTouchStart = (e) => {
-            const touch = e.touches[0];
-            setIsDragging(true);
-            setDragStartX(touch.clientX);
-            setDragStartY(touch.clientY);
-            targetRef.current = e.currentTarget;
-
-            const currentTransform = targetRef.current.style.transform;
-            const translateValues = currentTransform.match(/translate3d\(([^)]+)\)/);
-
-            if (translateValues) {
-                const transformArray = translateValues[1].split(/[\s,]+/);
-                const translateX = parseFloat(transformArray[0]);
-                const translateY = parseFloat(transformArray[1]);
-
-                if (!isNaN(translateX) && !isNaN(translateY)) {
-                    setCurrentOffset({
-                        x: translateX,
-                        y: translateY,
-                    });
-                }
-            }
-
-            if (onDragStart) onDragStart();
-        };
 
         if (isDragging) {
             window.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -87,6 +62,32 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
             window.removeEventListener('mouseup', handleMouseUp);
         };
     }, [isDragging]);
+
+    const handleTouchStart = (e) => {
+        const touch = e.touches[0];
+        setIsDragging(true);
+        setDragStartX(touch.clientX);
+        setDragStartY(touch.clientY);
+        targetRef.current = e.currentTarget;
+
+        const currentTransform = targetRef.current.style.transform;
+        const translateValues = currentTransform.match(/translate3d\(([^)]+)\)/);
+
+        if (translateValues) {
+            const transformArray = translateValues[1].split(/[\s,]+/);
+            const translateX = parseFloat(transformArray[0]);
+            const translateY = parseFloat(transformArray[1]);
+
+            if (!isNaN(translateX) && !isNaN(translateY)) {
+                setCurrentOffset({
+                    x: translateX,
+                    y: translateY,
+                });
+            }
+        }
+
+        if (onDragStart) onDragStart();
+    };
 
     return (
         <div
