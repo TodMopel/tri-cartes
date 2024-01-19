@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/tri-cartes/static/css/main.58e188ac.css",
+    "main.js": "/tri-cartes/static/js/main.cdc40675.js",
+    "static/media/Montserrat-Italic-VariableFont_wght.ttf": "/tri-cartes/static/media/Montserrat-Italic-VariableFont_wght.7451547bd28d8dddbeea.ttf",
+    "static/media/Montserrat-VariableFont_wght.ttf": "/tri-cartes/static/media/Montserrat-VariableFont_wght.7e687123cd4528224ce5.ttf",
+    "static/media/GloriaHallelujah-Regular.ttf": "/tri-cartes/static/media/GloriaHallelujah-Regular.c9da976c6f9088d1b3c9.ttf",
+    "index.html": "/tri-cartes/index.html",
+    "main.58e188ac.css.map": "/tri-cartes/static/css/main.58e188ac.css.map",
+    "main.cdc40675.js.map": "/tri-cartes/static/js/main.cdc40675.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.58e188ac.css",
+    "static/js/main.cdc40675.js"
+  ]
+}

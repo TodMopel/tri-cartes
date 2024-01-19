@@ -37,23 +37,23 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
                 onDragEnd();
 
             window.removeEventListener('mousemove', handleMove);
-            window.removeEventListener('touchmove', handleMove);
+            //window.removeEventListener('touchmove', handleMove);
             window.removeEventListener('mouseup', handleUp);
-            window.removeEventListener('touchend', handleUp);
+            //window.removeEventListener('touchend', handleUp);
         };
 
         if (isDragging) {
             window.addEventListener('mousemove', handleMove);
-            window.addEventListener('touchmove', handleMove, { passive: false });
+            //window.addEventListener('touchmove', handleMove, { passive: false });
             window.addEventListener('mouseup', handleUp);
-            window.addEventListener('touchend', handleUp);
+            //window.addEventListener('touchend', handleUp);
         }
 
         return () => {
             window.removeEventListener('mousemove', handleMove);
-            window.removeEventListener('touchmove', handleMove);
+            //window.removeEventListener('touchmove', handleMove);
             window.removeEventListener('mouseup', handleUp);
-            window.removeEventListener('touchend', handleUp);
+            //window.removeEventListener('touchend', handleUp);
         };
     }, [isDragging, currentOffset, dragStartX, dragStartY, initialPosition, onDragEnd, onDragMove, size]);
 
@@ -86,7 +86,7 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
     return (
         <div
             onMouseDown={handleDown}
-            onTouchStart={handleDown}
+            //onTouchStart={handleDown}
             style={{
                 cursor: isDragging ? 'grabbing' : 'grab',
                 position: 'absolute',

@@ -35,7 +35,6 @@
 .App {
     font-family: 'No Serif', sans-serif;
     text-align: center;
-    overflow:hidden;
 }
 
 .home-page::before,
@@ -195,6 +194,7 @@ h1{
 
 /* Game Elements */
 .unselectable {
+    overflow:hidden;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     -moz-user-select: none;
