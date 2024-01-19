@@ -189,7 +189,6 @@ const GamePage = ({ jobListData }) => {
         const newCategory = {
             position: { x: newCategoryPosition.x, y: newCategoryPosition.y },
             text: config.category.baseTitle + (categoryList.length + 1),
-            
             categoryCardList: [],
 
             zIndex: zIndexOrder,
