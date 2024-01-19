@@ -33,7 +33,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
         const handleUp = () => {
             setIsDragging(false);
-            setScale(1);
 
             if (onDragEnd)
                 onDragEnd();
@@ -65,8 +64,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
         setDragStartY(e.touches ? e.touches[0].clientY : e.clientY);
         targetRef.current = e.currentTarget;
 
-        setScale(1.1);
-
         const currentTransform = targetRef.current.style.transform;
         const translateValues = currentTransform.match(/translate3d\(([^)]+)\)/);
 
@@ -97,7 +94,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
                 zIndex: zIndexOrder,
 
                 transition: isDragging ? 'none' : 'transform 0.2s ease-out',
-                transform: `scale(${scale})`,
             }}
         >
             {children}
