@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Card from './../components/Card';
 import CardPile from './../components/CardPile';
 import Category from './../components/Category';
@@ -8,7 +9,7 @@ import './../App.css';
 
 import config from './../data/config';
 
-const GamePage = ({ jobListData }) => {
+const GamePage = ({ jobListData, onResultSubmit }) => {
 
     const [gameData, setGameData] = useState({
         jobList: [],
@@ -26,8 +27,7 @@ const GamePage = ({ jobListData }) => {
     const pilePosition = ({ x: window.innerWidth / 2 - 55, y: window.innerHeight / 2 - 40 });
     const discardPosition = ({ x: 110, y: 80 });
     const infoPanelPosition = ({ x: 110, y: window.innerHeight - 280 });
-    const newCategoryButtonPosition = ({ x: window.innerWidth / 2, y: 0 });
-    const newCategoryPosition = ({ x: window.innerWidth / 2 + 25, y: 80 });
+    const newCategoryPosition = ({ x: window.innerWidth / 2 - config.category.size.x / 2, y: 80 });
 
     useEffect(() => {
         setGameData(prevGameData => ({
@@ -188,7 +188,8 @@ const GamePage = ({ jobListData }) => {
 
         const newCategory = {
             position: { x: newCategoryPosition.x, y: newCategoryPosition.y },
-            text: config.category.baseTitle + (categoryList.length + 1),
+            text: config.category.baseTitle + " " +(categoryList.length + 1),
+
             categoryCardList: [],
 
             zIndex: zIndexOrder,
@@ -219,7 +220,6 @@ const GamePage = ({ jobListData }) => {
             });
         }
         if (categoryIndex != null) {
-            console.log(categoryIndex);
             setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
             setGameData((prevGameData) => {
                 const updatedCategoryList = [...prevGameData.categoryList];
@@ -259,6 +259,30 @@ const GamePage = ({ jobListData }) => {
 
     //    setMouseCoordinates({ x: touchX, y: touchY });
     //};
+
+    const updateCategoryText = (categoryIndex, newText) => {
+        setGameData((prevGameData) => {
+            const updatedCategoryList = [...prevGameData.categoryList];
+            updatedCategoryList[categoryIndex] = {
+                ...updatedCategoryList[categoryIndex],
+                text: newText,
+            };
+            return {
+                ...prevGameData,
+                categoryList: updatedCategoryList,
+            };
+        });
+    };
+
+    const generateResultTable = () => {
+        const resultTable = gameData.categoryList.map((category) => {
+            return {
+                categoryName: category.text,
+                jobs: category.categoryCardList.map((card) => card.text),
+            };
+        });
+        onResultSubmit(resultTable);
+    };
     return (
         <div
             className="unselectable game-page background-grid"
@@ -306,10 +330,11 @@ const GamePage = ({ jobListData }) => {
                     key={index}
                     categoryIndex={index}
                     text={category.text}
+                    updateCategoryText={(newText) => updateCategoryText(index, newText)}
+
                     position={category.position}
                     categoryCardList={category.categoryCardList}
                     zIndexOrder={category.zIndex}
-
 
                     onDragStart={() => handleDragStart(null, index)}
 
@@ -337,11 +362,6 @@ const GamePage = ({ jobListData }) => {
 
             <div
                 className="ui-button-container ui-add-category-button"
-                style={{
-                    position: 'absolute',
-                    left: newCategoryButtonPosition.x + 'px',
-                    top: newCategoryButtonPosition.y + 'px',
-                }}
             >
                 <div
                     className="button button-normal"
@@ -351,10 +371,14 @@ const GamePage = ({ jobListData }) => {
                 </div>
             </div>
             {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive) && (
-                <div className="ui-button-container" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    <div className="button button-normal" onClick={console.log("coucou")}>
-                        Votre texte de bouton ici
-                    </div>
+                <div className="ui-button-container ui-end-game-button">
+                    <Link
+                        onClick={generateResultTable}
+                        to="/tri-cartes/result"
+                        className="button button-normal"
+                    >
+                        {config.result.endGameButton}
+                    </Link>
                 </div>
             )}
         </div>

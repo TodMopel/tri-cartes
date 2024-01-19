@@ -8,6 +8,11 @@
         buttonUpdateList: "valider",
         infoUpdateList: "cartes chargées",
     },
+    result: {
+        title: "Vous avez trié les métiers",
+        subTitle: "vos résultats",
+        endGameButton: "Accéder au résultat",
+    },
     card: {
         size: ({ x: 120, y: 80 }),
     },
@@ -30,12 +35,13 @@
         size: ({ x: 130, y: 140 }),
     },
     category: {
-        baseTitle: "catégorie ",
+        baseTitle: "catégorie",
         createButtonText: "créer catégorie",
         categoryColors: [
             '#FFD1DC', '#AED6F1', '#C3E6CB', '#FFFACD', '#E6E6FA',
             '#FFA07A', '#87CEEB', '#98FB98', '#FFD700', '#DDA0DD',
             '#FFB6C1', '#B0E0E6', '#98FB98', '#FFE4C4', '#D8BFD8'],
+        size: ({ x: 130, y: 150 }),
     },
 };
 

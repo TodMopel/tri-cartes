@@ -60,7 +60,8 @@
     height: 100vh;
 }
 
-.home-page {
+.home-page,
+.result-page {
     height: 100vh;
 }
 
@@ -204,6 +205,18 @@ h1{
 
 .ui-add-category-button {
     border-radius: 0px 0px 5px 5px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.ui-end-game-button {
+    border-radius: 5px 5px 0px 0px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }
 
 .game-element-title {

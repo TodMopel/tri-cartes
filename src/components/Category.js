@@ -5,9 +5,9 @@ import Droppable from './Droppable';
 import editLineIcon from './../images/edit_line.png';
 import config from './../data/config';
 
-const Category = ({ categoryIndex, position, text, onDragStart, cardMoving, mousePosition, onCardDropInsideDropZone, categoryCardList, onCardRestored, zIndexOrder }) => {
+const Category = ({ categoryIndex, position, text, updateCategoryText, onDragStart, cardMoving, mousePosition, onCardDropInsideDropZone, categoryCardList, onCardRestored, zIndexOrder }) => {
     const categoryRef = useRef();
-    const [thisSize, setThisSize] = useState({ x: 130, y: 150 });
+    const [thisSize, setThisSize] = useState(config.category.size);
     const [thisColor, setThisColor] = useState();
     const dropZoneRef = useRef();
     const dropZoneSize = config.card.size;
@@ -17,6 +17,7 @@ const Category = ({ categoryIndex, position, text, onDragStart, cardMoving, mous
 
     const [isDropZoneActive, setIsDropZoneActive] = useState(false);
     const [isRenaming, setIsRenaming] = useState(false);
+
     const [categoryName, setCategoryName] = useState(text);
 
     const handleCardEnter = () => {
@@ -57,6 +58,7 @@ const Category = ({ categoryIndex, position, text, onDragStart, cardMoving, mous
             const inputHeight = categoryNameRef.current.getBoundingClientRect().height;
             setCategoryNameHeight(inputHeight);
             setThisSize((prevSize) => ({ ...prevSize, y: 100 + categoryCardList.length * 30 + inputHeight }));
+            updateCategoryText(categoryName);
         }, 0);
     };
 
@@ -82,6 +84,9 @@ const Category = ({ categoryIndex, position, text, onDragStart, cardMoving, mous
         return config.category.categoryColors[randomIndex];
     };
 
+    const getCategoryName = () => {
+        return categoryName;
+    }
 
     return (
         <Draggable
