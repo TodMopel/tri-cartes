@@ -352,7 +352,7 @@ const GamePage = ({ jobListData }) => {
             </div>
             {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive) && (
                 <div className="ui-button-container" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    <div className="button button-normal" onClick={console.log(coucou)}>
+                    <div className="button button-normal" onClick={console.log("coucou")}>
                         Votre texte de bouton ici
                     </div>
                 </div>
