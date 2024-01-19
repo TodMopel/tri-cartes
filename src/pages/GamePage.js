@@ -188,7 +188,7 @@ const GamePage = ({ jobListData }) => {
 
         const newCategory = {
             position: { x: newCategoryPosition.x, y: newCategoryPosition.y },
-            text: config.category.baseTitle + " " + (categoryList.length + 1),
+            text: config.category.baseTitle + (categoryList.length + 1),
             
             categoryCardList: [],
 
@@ -259,7 +259,6 @@ const GamePage = ({ jobListData }) => {
         <div
             className="unselectable game-page background-grid"
             onMouseMove={handleMouseMove}
-            onTouchMove={handleMouseMove}
         >
             {gameData.jobList.length > -1 && (
                 <CardPile
