@@ -253,11 +253,17 @@ const GamePage = ({ jobListData }) => {
 
         setMouseCoordinates({ x: mouseX, y: mouseY });
     };
+    const handleTouchMove = (e) => {
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
 
+        setMouseCoordinates({ x: touchX, y: touchY });
+    };
     return (
         <div
             className="unselectable game-page background-grid"
             onMouseMove={handleMouseMove}
+            onTouchMove={handleTouchMove}
         >
             {gameData.jobList.length > -1 && (
                 <CardPile

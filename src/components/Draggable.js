@@ -11,10 +11,13 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
     const borderSize = 30;
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        const handleMove = (e) => {
             if (isDragging) {
-                const deltaX = e.clientX - dragStartX + currentOffset.x;
-                const deltaY = e.clientY - dragStartY + currentOffset.y;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                const deltaX = clientX - dragStartX + currentOffset.x;
+                const deltaY = clientY - dragStartY + currentOffset.y;
 
                 const clampedX = Math.min(Math.max(deltaX, -initialPosition.x + borderSize), window.innerWidth - size.x - initialPosition.x - borderSize);
                 const clampedY = Math.min(Math.max(deltaY, -initialPosition.y + borderSize), window.innerHeight - size.y - initialPosition.y - borderSize);
@@ -27,28 +30,37 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
             }
         };
 
-        const handleMouseUp = () => {
+        const handleUp = () => {
             setIsDragging(false);
 
             if (onDragEnd)
                 onDragEnd();
+
+            window.removeEventListener('mousemove', handleMove);
+            window.removeEventListener('touchmove', handleMove);
+            window.removeEventListener('mouseup', handleUp);
+            window.removeEventListener('touchend', handleUp);
         };
 
         if (isDragging) {
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
+            window.addEventListener('mousemove', handleMove);
+            window.addEventListener('touchmove', handleMove);
+            window.addEventListener('mouseup', handleUp);
+            window.addEventListener('touchend', handleUp);
         }
 
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('mousemove', handleMove);
+            window.removeEventListener('touchmove', handleMove);
+            window.removeEventListener('mouseup', handleUp);
+            window.removeEventListener('touchend', handleUp);
         };
-    }, [isDragging]);
+    }, [isDragging, currentOffset, dragStartX, dragStartY, initialPosition, onDragEnd, onDragMove, size]);
 
-    const handleMouseDown = (e) => {
+    const handleDown = (e) => {
         setIsDragging(true);
-        setDragStartX(e.clientX);
-        setDragStartY(e.clientY);
+        setDragStartX(e.touches ? e.touches[0].clientX : e.clientX);
+        setDragStartY(e.touches ? e.touches[0].clientY : e.clientY);
         targetRef.current = e.currentTarget;
 
         const currentTransform = targetRef.current.style.transform;
@@ -73,7 +85,8 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
     return (
         <div
-            onMouseDown={handleMouseDown}
+            onMouseDown={handleDown}
+            onTouchStart={handleDown}
             style={{
                 cursor: isDragging ? 'grabbing' : 'grab',
                 position: 'absolute',

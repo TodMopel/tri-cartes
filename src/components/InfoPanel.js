@@ -16,12 +16,12 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
     const [isDropZoneActive, setIsDropZoneActive] = useState(false);
 
     const handleCardEnter = () => {
-        console.log(`Card entered infoPanel dropZone!`);
+        //console.log(`Card entered infoPanel dropZone!`);
         setIsDropZoneActive(true);
     };
 
     const handleCardLeave = () => {
-        console.log(`Card left infoPanel dropZone!`);
+        //console.log(`Card left infoPanel dropZone!`);
         setIsDropZoneActive(false);
     };
 
