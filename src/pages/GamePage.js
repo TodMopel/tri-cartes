@@ -370,7 +370,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                     {config.category.createButtonText}
                 </div>
             </div>
-            {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive) && (
+            {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive && gameData.infoPanelCard === null) && (
                 <div className="ui-button-container ui-end-game-button">
                     <Link
                         onClick={generateResultTable}

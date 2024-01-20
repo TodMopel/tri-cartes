@@ -156,7 +156,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                             key={index}
                         >
                             <div
-                                className="card card-categorized"
+                                className="card card-txt card-categorized"
                                 onClick={() => handleCategoryCardClick(categoryIndex, index)}
                             >
                                 {card.text}

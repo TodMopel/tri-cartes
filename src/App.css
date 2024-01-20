@@ -47,7 +47,7 @@
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    background: radial-gradient(ellipse at top, var(--primary), transparent), radial-gradient(ellipse at bottom, var(--accent), transparent);
+    background: radial-gradient(ellipse at top, var(--primary), transparent), radial-gradient(ellipse at bottom, var(--secondary), transparent);
     opacity: 0.2;
     filter: blur(0px);
 }
@@ -255,14 +255,18 @@ h1{
 }
 
 .card {
-    font-family: 'Hand Written', sans-serif;
-    font-size: 14px;
-    word-break: break-word;
-
     display: flex;
     align-items: start;
     justify-content: center;
     text-align: center;
+    padding-top: 10%;
+}
+
+.card-txt {
+    font-family: 'Hand Written', sans-serif;
+    font-size: 14px;
+    word-break: break-word;
+    line-height: 80%;
 }
 
 .card-draggable {

@@ -49,7 +49,7 @@ const CardPile = ({ position, onDragStart, addCard, counter, zIndexOrder }) => {
                 <div
                     className="game-txt"
                     style={{
-                        fontWeight: counter * 9
+                        fontWeight: counter * 9,
                     }}
                 >
                 {counter > 0 && ` ${counter}`}

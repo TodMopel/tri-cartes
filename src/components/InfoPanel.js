@@ -39,7 +39,6 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
                 x: rect.left + 6,
                 y: rect.top + 35,
             };
-            //console.log(droppedCard.text);
             onCardRestored(position, droppedCard)
         }
     };
@@ -93,7 +92,7 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
                         >
                             <div
                                 onClick={handleRecoverCard}
-                                className="card"
+                                className="card card-txt"
                                 style={{
                                     width: dropZoneSize.x,
                                     height: dropZoneSize.y,
@@ -105,8 +104,10 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
                                     style={{
                                         position: 'absolute',
 
-                                        top: 80 + 'px',
+                                        top: 90 + 'px',
                                         color: 'darkgray',
+                                        lineHeight: 100 + '%',
+
                                     }}
                                 >
                                     {config.infoPanel.buttonText}

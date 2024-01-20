@@ -16,7 +16,7 @@ const Card = ({ text, position, onDragStart, onDragEnd, onDragMove, zIndexOrder 
             zIndexOrder={zIndexOrder}
         >
             <div
-                className="card-container"
+                className="card-container card-draggable"
                 style={{
                     position: 'absolute',
                     left: position.x + 'px',
@@ -26,9 +26,9 @@ const Card = ({ text, position, onDragStart, onDragEnd, onDragMove, zIndexOrder 
                 }}
             >
                 <div
-                    className="card card-draggable"
+                    className="card card-txt"
                 >
-                {text}
+                    {text}
                 </div>
             </div>
         </Draggable>
