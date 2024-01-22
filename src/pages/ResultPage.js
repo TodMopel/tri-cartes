@@ -53,7 +53,7 @@ const ResultPage = ({ resultData }) => {
             <div className="center-content">
                 <h1>{config.result.title}</h1>
                 <h3>{config.result.subTitle}</h3>
-                <ul>
+                <ul className="result-list">
                     {resultTable &&
                         resultTable.map((category, index) => (
                             <CategoryNode

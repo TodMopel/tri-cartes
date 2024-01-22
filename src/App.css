@@ -356,3 +356,9 @@ h1{
 .panel-txt{
     font-weight : 600;
 }
+
+/* Result Page Elements */
+.result-list{
+    height : 70vh;
+    overflow: scroll;
+}
