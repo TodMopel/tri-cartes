@@ -8,7 +8,7 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, mousePositio
     const discardRef = useRef();
     const thisSize = config.discard.size;
     const dropZoneRef = useRef();
-    const dropZoneSize = { x: 110, y: 50 };
+    const dropZoneSize = { x: 110, y: 80 };
 
     const [isDropZoneActive, setIsDropZoneActive] = useState(false);
 

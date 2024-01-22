@@ -26,7 +26,7 @@
         title: "DEFAUSSE",
         buttonText: "annuler",
 
-        size: ({ x: 130, y: 130 }),
+        size: ({ x: 130, y: 150 }),
     },
     infoPanel: {
         title: "INFO",
