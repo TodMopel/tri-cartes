@@ -21,7 +21,7 @@ const JobNode = ({ job, onDelete }) => {
         <li>
             {job}{' '}
             <span className="button-delete" onClick={onDelete}>
-                X
+                x
             </span>
         </li>
     );
