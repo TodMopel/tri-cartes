@@ -5,7 +5,6 @@ import Papa from 'papaparse';
 import './../App.css';
 
 import config from './../data/config';
-import Draggable from '../components/Draggable';
 
 const HomePage = ({ onGoogleSheetSubmit }) => {
     const [googleSheetURL, setGoogleSheetURL] = useState('https://docs.google.com/spreadsheets/d/e/2PACX-1vShvPU2v2t8mBqaitqTAFpNlcNPkdIxWnBlrSVguu0z_GbY_vHCyNWPuSfG2XhomHE4muU9UhBNKy3O/pub?output=csv');

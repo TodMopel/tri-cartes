@@ -202,8 +202,8 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     }
 
     const handleDragStart = (cardIndex, categoryIndex) => {
+        setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
         if (cardIndex != null) {
-            setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
             setGameData((prevGameData) => {
                 const updatedCardList = [...prevGameData.cardList];
                 updatedCardList[cardIndex] = {
@@ -220,7 +220,6 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             });
         }
         if (categoryIndex != null) {
-            setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
             setGameData((prevGameData) => {
                 const updatedCategoryList = [...prevGameData.categoryList];
                 updatedCategoryList[categoryIndex] = {
