@@ -1,11 +1,11 @@
 ﻿import React, { useRef, useState, useEffect } from 'react';
 
-const Droppable = ({ children, cardMoving, mousePosition, onCardEnter, onCardLeave }) => {
+const Droppable = ({ children, cardMoving, categoryMoving, mousePosition, onCardEnter, onCardLeave }) => {
     const droppableRef = useRef(null);
     const [isMouseOverZone, setIsMouseOverZone] = useState(false);
 
     useEffect(() => {
-        if (cardMoving && mousePosition) {
+        if ((cardMoving || categoryMoving) && mousePosition) {
             const droppableElement = droppableRef.current;
             if (droppableElement) {
                 const rect = droppableElement.getBoundingClientRect();

@@ -20,6 +20,9 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
         selectedCardIndex: null,
         lastSelectedCardIndex: null,
         cardMoving: false,
+        selectedCategoryIndex: null,
+        lastSelectedCategoryIndex: null,
+        categoryMoving: false,
     });
     const [mouseCoordinates, setMouseCoordinates] = useState({ x: 0, y: 0 });
     const [zIndexOrder, setZIndexOrder] = useState(1);
@@ -51,6 +54,8 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     //        jobList: Object.entries(jobListObject).map(([text, description]) => ({ text, description })),
     //    }));
     //};
+
+
 
     const handleCardDropOnDroppable = (item) => {
         const droppedCard = gameData.cardList[gameData.lastSelectedCardIndex];
@@ -85,6 +90,16 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                 ...prevGameData,
                 categoryList: updatedCategoryList,
             }));
+        }
+    }
+
+    const handleCategoryDropOnDroppable = (item) => {
+        const droppedCategory = gameData.categoryList[gameData.lastSelectedCategoryIndex];
+
+        console.log(`Category ${droppedCategory.text} dropped inside : ${item} `);
+        droppedCategory.isActive = false;
+        if (item === "Discard") {
+            handleDeleteCategory(droppedCategory);
         }
     }
 
@@ -191,6 +206,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             text: config.category.baseTitle + " " +(categoryList.length + 1),
 
             categoryCardList: [],
+            isActive: true,
 
             zIndex: zIndexOrder,
         }
@@ -201,9 +217,21 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
         }));
     }
 
+    const handleDeleteCategory = (droppedCategory) => {
+        const droppedCardList = droppedCategory.categoryCardList;
+        console.log(droppedCardList);
+        if (droppedCardList.length > 0) {
+            setGameData((prevGameData) => ({
+                ...prevGameData,
+                discardedCardsList: [...prevGameData.discardedCardsList, ...droppedCardList],
+            }));
+        }
+    }
+
     const handleDragStart = (cardIndex, categoryIndex) => {
-        setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
         if (cardIndex != null) {
+            setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
+
             setGameData((prevGameData) => {
                 const updatedCardList = [...prevGameData.cardList];
                 updatedCardList[cardIndex] = {
@@ -220,6 +248,8 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             });
         }
         if (categoryIndex != null) {
+            setZIndexOrder(prevZIndexOrder => prevZIndexOrder + 1);
+
             setGameData((prevGameData) => {
                 const updatedCategoryList = [...prevGameData.categoryList];
                 updatedCategoryList[categoryIndex] = {
@@ -229,21 +259,31 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
                 return {
                     ...prevGameData,
+                    selectedCategoryIndex: categoryIndex,
+                    categoryMoving: true,
                     categoryList: updatedCategoryList,
                 };
             });
         }
     };
 
-    const handleCardDragEnd = () => {
-        setGameData((prevGameData) => ({
-            ...prevGameData,
-            lastSelectedCardIndex: prevGameData.selectedCardIndex,
-            selectedCardIndex: null,
-            cardMoving: false,
-        }));
-    };
-    const handleCardMove = () => {
+    const handleDragEnd = (cardIndex, categoryIndex) => {
+        if (cardIndex != null) {
+            setGameData((prevGameData) => ({
+                ...prevGameData,
+                lastSelectedCardIndex: prevGameData.selectedCardIndex,
+                selectedCardIndex: null,
+                cardMoving: false,
+            }));
+        }
+        if (categoryIndex != null) {
+            setGameData((prevGameData) => ({
+                ...prevGameData,
+                lastSelectedCategoryIndex: prevGameData.selectedCategoryIndex,
+                selectedCategoryIndex: null,
+                categoryMoving: false,
+            }));
+        }
     };
 
     const handleMouseMove = (e) => {
@@ -307,9 +347,11 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                 discardedCardsList={gameData.discardedCardsList}
 
                 cardMoving={gameData.cardMoving}
+                categoryMoving={gameData.categoryMoving}
                 mousePosition={mouseCoordinates}
 
                 onCardDropInsideDropZone={handleCardDropOnDroppable}
+                onCategoryDropInsideDropZone={handleCategoryDropOnDroppable}
             />
             <InfoPanel
                 position={infoPanelPosition}
@@ -325,6 +367,8 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                 onCardRestored={handleRestoreInfoPanelCard}
             />
             {gameData.categoryList.map((category, index) => (
+                category.isActive && (
+
                 <Category
                     key={index}
                     categoryIndex={index}
@@ -336,6 +380,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                     zIndexOrder={category.zIndex}
 
                     onDragStart={() => handleDragStart(null, index)}
+                    onDragEnd={() => handleDragEnd(null, index)}
 
                     cardMoving={gameData.cardMoving}
                     mousePosition={mouseCoordinates}
@@ -343,7 +388,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                     onCardDropInsideDropZone={handleCardDropOnDroppable}
 
                     onCardRestored={handleRestoreCategorizedCard}
-                />
+                />)
             ))}
             {gameData.cardList.map((card, index) => (
                 card.isActive && (
@@ -354,8 +399,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                         zIndexOrder={card.zIndex}
 
                         onDragStart={() => handleDragStart(index, null)}
-                        onDragEnd={handleCardDragEnd}
-                        onDragMove={handleCardMove}
+                        onDragEnd={() => handleDragEnd(index, null)}
                     />)
             ))}
 

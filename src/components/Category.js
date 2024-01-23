@@ -5,7 +5,7 @@ import Droppable from './Droppable';
 import editLineIcon from './../images/edit_line.png';
 import config from './../data/config';
 
-const Category = ({ categoryIndex, position, text, updateCategoryText, onDragStart, cardMoving, mousePosition, onCardDropInsideDropZone, categoryCardList, onCardRestored, zIndexOrder }) => {
+const Category = ({ categoryIndex, position, text, updateCategoryText, onDragStart, onDragEnd, cardMoving, mousePosition, onCardDropInsideDropZone, categoryCardList, onCardRestored, zIndexOrder }) => {
     const categoryRef = useRef();
     const [thisSize, setThisSize] = useState(config.category.size);
     const [thisColor, setThisColor] = useState();
@@ -93,6 +93,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
             initialPosition={position}
             size={thisSize}
             onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
             zIndexOrder={zIndexOrder}
         >
             <div

@@ -4,7 +4,7 @@ import Droppable from './Droppable';
 
 import config from './../data/config';
 
-const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, mousePosition, onCardDropInsideDropZone, discardedCardsList, zIndexOrder}) => {
+const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, categoryMoving, mousePosition, onCardDropInsideDropZone, onCategoryDropInsideDropZone, discardedCardsList, zIndexOrder}) => {
     const discardRef = useRef();
     const thisSize = config.discard.size;
     const dropZoneRef = useRef();
@@ -13,14 +13,14 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, mousePositio
     const [isDropZoneActive, setIsDropZoneActive] = useState(false);
 
     const handleCardEnter = () => {
-        //console.log(`Card entered discard dropZone!`);
-        if (cardMoving)
+        console.log(`Card entered discard dropZone, card : ${cardMoving}, category : ${categoryMoving}`);
+        if (cardMoving || categoryMoving)
             setIsDropZoneActive(true);
     };
 
     const handleCardLeave = () => {
-        //console.log(`Card left discard dropZone!`);
-        if (cardMoving)
+        console.log(`Card left discard dropZone!`);
+        if (cardMoving || categoryMoving)
             setIsDropZoneActive(false);
     };
 
@@ -30,6 +30,12 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, mousePositio
             setIsDropZoneActive(false);
         }
     }, [cardMoving]);
+    useEffect(() => {
+        if (isDropZoneActive) {
+            onCategoryDropInsideDropZone("Discard");
+            setIsDropZoneActive(false);
+        }
+    }, [categoryMoving]);
 
     const handleCancel = () => {
         const rect = discardRef.current.getBoundingClientRect();
@@ -66,6 +72,7 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, mousePositio
                 </div>
                 <Droppable
                     cardMoving={cardMoving}
+                    categoryMoving={categoryMoving}
                     mousePosition={mousePosition}
                     onCardEnter={handleCardEnter}
                     onCardLeave={handleCardLeave}
