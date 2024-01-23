@@ -53,6 +53,7 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
     };
 
     const handleSubmit = () => {
+        setExtractionCount(null);
         fetchGoogleSheetData();
     };
 
