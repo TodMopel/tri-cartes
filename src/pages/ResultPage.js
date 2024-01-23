@@ -5,9 +5,9 @@ import config from './../data/config';
 
 const CategoryNode = ({ categoryName, jobs, onDeleteJob }) => {
     return (
-        <li>
-            <strong>{categoryName}</strong>
-            <ul>
+        <li className="category-node center-content">
+            <div className="category-name">{categoryName}</div>
+            <ul className="jobs-list">
                 {jobs.map((job, index) => (
                     <JobNode key={index} job={job} onDelete={() => onDeleteJob(categoryName, job)} />
                 ))}
@@ -17,12 +17,17 @@ const CategoryNode = ({ categoryName, jobs, onDeleteJob }) => {
 };
 
 const JobNode = ({ job, onDelete }) => {
+    const [selected, setSelected] = useState(false);
+
+    const onSelect = () => {
+        setSelected(!selected);
+    };
+
     return (
-        <li>
-            {job}{' '}
-            <span className="button-delete" onClick={onDelete}>
-                x
-            </span>
+        <li className="job-node row-content">
+            <span onClick={onSelect} className={`job-text ${selected ? 'job-text-selected' : ''}`}>{job}</span>
+
+            <span className="delete-button button-small" onClick={onDelete}>{config.result.deleteJobButton}</span>
         </li>
     );
 };
@@ -48,14 +53,18 @@ const ResultPage = ({ resultData }) => {
         setResultTable(updatedResultTable);
     };
 
+    const Categories = resultTable.filter((category) => category.jobs.length > 0);
+
     return (
         <div className="background-grid result-page center-content">
-            <div className="center-content">
-                <h1>{config.result.title}</h1>
-                <h3>{config.result.subTitle}</h3>
+            <div className="center-content-spread">
+                <div>
+                    <h1>{config.result.title}</h1>
+                    <h3>{config.result.subTitle}</h3>
+                </div>
                 <ul className="result-list">
-                    {resultTable &&
-                        resultTable.map((category, index) => (
+                    {Categories &&
+                        Categories.map((category, index) => (
                             <CategoryNode
                                 key={index}
                                 categoryName={category.categoryName}

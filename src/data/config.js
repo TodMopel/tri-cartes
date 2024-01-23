@@ -11,6 +11,7 @@
     result: {
         title: "Vous avez trié les métiers",
         subTitle: "vos résultats",
+        deleteJobButton: "retirer",
         endGameButton: "Accéder au résultat",
     },
     card: {
