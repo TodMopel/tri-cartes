@@ -96,7 +96,6 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     const handleCategoryDropOnDroppable = (item) => {
         const droppedCategory = gameData.categoryList[gameData.lastSelectedCategoryIndex];
 
-        console.log(`Category ${droppedCategory.text} dropped inside : ${item} `);
         droppedCategory.isActive = false;
         if (item === "Discard") {
             handleDeleteCategory(droppedCategory);
@@ -219,13 +218,10 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
     const handleDeleteCategory = (droppedCategory) => {
         const droppedCardList = droppedCategory.categoryCardList;
-        console.log(droppedCardList);
-        if (droppedCardList.length > 0) {
-            setGameData((prevGameData) => ({
-                ...prevGameData,
-                discardedCardsList: [...prevGameData.discardedCardsList, ...droppedCardList],
-            }));
-        }
+        setGameData((prevGameData) => ({
+            ...prevGameData,
+            discardedCardsList: [...prevGameData.discardedCardsList, ...droppedCardList],
+        }));
     }
 
     const handleDragStart = (cardIndex, categoryIndex) => {
@@ -314,14 +310,15 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     };
 
     const generateResultTable = () => {
-        const resultTable = gameData.categoryList.map((category) => {
-            return {
+        const resultTable = gameData.categoryList
+            .filter((category) => category.isActive)
+            .map((category) => ({
                 categoryName: category.text,
                 jobs: category.categoryCardList.map((card) => card.text),
-            };
-        });
+            }));
         onResultSubmit(resultTable);
     };
+
     return (
         <div
             className="unselectable game-page background-grid"
@@ -368,7 +365,6 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             />
             {gameData.categoryList.map((category, index) => (
                 category.isActive && (
-
                 <Category
                     key={index}
                     categoryIndex={index}
