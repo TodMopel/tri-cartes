@@ -314,7 +314,10 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             .filter((category) => category.isActive)
             .map((category) => ({
                 categoryName: category.text,
-                jobs: category.categoryCardList.map((card) => card.text),
+                jobs: category.categoryCardList.map((card) => ({
+                    text: card.text,
+                    isActive: true,
+                })),
             }));
         onResultSubmit(resultTable);
     };

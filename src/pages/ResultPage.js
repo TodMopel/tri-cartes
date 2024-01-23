@@ -9,7 +9,8 @@ const CategoryNode = ({ categoryName, jobs, onDeleteJob }) => {
             <div className="category-name">{categoryName}</div>
             <ul className="jobs-list">
                 {jobs.map((job, index) => (
-                    <JobNode key={index} job={job} onDelete={() => onDeleteJob(categoryName, job)} />
+                    job.isActive && (
+                        <JobNode key={index} job={job} onDelete={() => onDeleteJob(categoryName, job)} />)
                 ))}
             </ul>
         </li>
@@ -25,8 +26,7 @@ const JobNode = ({ job, onDelete }) => {
 
     return (
         <li className="job-node row-content">
-            <span onClick={onSelect} className={`job-text ${selected ? 'job-text-selected' : ''}`}>{job}</span>
-
+            <span onClick={onSelect} className={`job-text ${selected ? 'job-text-selected' : ''}`}>{job.text}</span>
             <span className="delete-button button-small" onClick={onDelete}>{config.result.deleteJobButton}</span>
         </li>
     );
@@ -44,7 +44,7 @@ const ResultPage = ({ resultData }) => {
             if (category.categoryName === categoryName) {
                 return {
                     ...category,
-                    jobs: category.jobs.filter((j) => j !== job),
+                    jobs: category.jobs.map((j) => (j.text === job.text ? { ...j, isActive: false } : j)),
                 };
             }
             return category;
@@ -53,7 +53,7 @@ const ResultPage = ({ resultData }) => {
         setResultTable(updatedResultTable);
     };
 
-    const Categories = resultTable.filter((category) => category.jobs.length > 0);
+    const activeCategories = resultTable.filter((category) => category.jobs.some((job) => job.isActive));
 
     return (
         <div className="background-grid result-page center-content">
@@ -63,8 +63,8 @@ const ResultPage = ({ resultData }) => {
                     <h3>{config.result.subTitle}</h3>
                 </div>
                 <ul className="result-list">
-                    {Categories &&
-                        Categories.map((category, index) => (
+                    {activeCategories &&
+                        activeCategories.map((category, index) => (
                             <CategoryNode
                                 key={index}
                                 categoryName={category.categoryName}
