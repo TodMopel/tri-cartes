@@ -38,29 +38,8 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             jobList: jobListData || [],
         }));
     }, [jobListData]);
-
-    //useEffect(() => {
-    //    if (gameData.jobList.length <= 0) {
-    //        fetchJobList();
-    //    }
-    //}, []);
-
-    //const fetchJobList = () => {
-    //    const jobListString = JSON.stringify(jobListData);
-    //    const jobListObject = JSON.parse(jobListString);
-
-    //    setGameData((prevGameData) => ({
-    //        ...prevGameData,
-    //        jobList: Object.entries(jobListObject).map(([text, description]) => ({ text, description })),
-    //    }));
-    //};
-
-
-
     const handleCardDropOnDroppable = (item) => {
         const droppedCard = gameData.cardList[gameData.lastSelectedCardIndex];
-
-        //console.log(`Card ${droppedCard.text} dropped inside : ${item} `);
 
         droppedCard.isActive = false;
         if (item === "Discard") {
