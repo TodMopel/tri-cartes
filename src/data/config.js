@@ -24,7 +24,7 @@
         size: ({ x: 130, y: 110 }),
     },
     discard: {
-        title: "DEFAUSSE",
+        title: "POUBELLE",
         buttonText: "annuler",
 
         size: ({ x: 130, y: 150 }),
