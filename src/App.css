@@ -325,8 +325,11 @@ h1 {
     .card-categorized-container :hover {
         transform: scale(1.1);
     }
-.card-categorized {
+.card-categorized-txt {
     font-size: 11px;
+}
+.card-categorized-counter {
+    font-size: 9px;
 }
 
 /* Pile Elements */

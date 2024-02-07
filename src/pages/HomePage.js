@@ -86,7 +86,7 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
             </div>
             {extractionCount !== null && (
                 <div className={`ui-card info-box success`}>
-                    {`${config.home.infoUpdateList} : ${extractionCount}`}
+                    {`${extractionCount} ${config.home.infoUpdateList}`}
                 </div>
             )}
             {errorMessages.length > 0 && (

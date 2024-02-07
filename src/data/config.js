@@ -6,7 +6,7 @@
         titleUpdateList: "Coller l'URL du Google Sheet",
         subTitleUpdateList: "url par défaut déjà renseigné",
         buttonUpdateList: "valider",
-        infoUpdateList: "cartes chargées",
+        infoUpdateList: "cartes",
     },
     result: {
         title: "Vous avez trié les métiers",
@@ -38,6 +38,7 @@
     category: {
         baseTitle: "catégorie",
         createButtonText: "créer catégorie",
+        infoCounter: "cartes",
         categoryColors: [
             '#AED6F1', '#C3E6CB', '#E6E6FA', '#87CEEB', '#98FB98',
             '#DDA0DD', '#B0E0E6', '#98FB98', '#FFE4C4', '#D8BFD8',

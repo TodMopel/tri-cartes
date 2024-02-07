@@ -39,7 +39,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
     }, [cardMoving]);
 
     useEffect(() => {
-        setThisSize((prevSize) => ({ ...prevSize, y: 100 + categoryCardList.length * 30 + categoryNameHeight }));
+        setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + categoryNameHeight }));
     }, [categoryCardList]);
 
     const handleRenameClick = () => {
@@ -57,7 +57,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
         setTimeout(() => {
             const inputHeight = categoryNameRef.current.getBoundingClientRect().height;
             setCategoryNameHeight(inputHeight);
-            setThisSize((prevSize) => ({ ...prevSize, y: 100 + categoryCardList.length * 30 + inputHeight }));
+            setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + inputHeight }));
             updateCategoryText(categoryName);
         }, 0);
     };
@@ -76,7 +76,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
         };
 
         onCardRestored(position, categoryIndex, index);
-        setThisSize((prevSize) => ({ ...prevSize, y: 100 + categoryCardList.length * 30 + categoryNameHeight }));
+        setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + categoryNameHeight }));
     }
 
     const getRandomColor = () => {
@@ -157,7 +157,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                             key={index}
                         >
                             <div
-                                className="card card-txt card-categorized"
+                                className="card card-txt card-categorized-txt"
                                 onClick={() => handleCategoryCardClick(categoryIndex, index)}
                             >
                                 {card.text}
@@ -171,7 +171,6 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                     onCardEnter={handleCardEnter}
                     onCardLeave={handleCardLeave}
                 >
-
                         <div
                             ref={dropZoneRef}
                             className="drop-zone-default"
@@ -183,6 +182,11 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                         >
                         </div>
                 </Droppable>
+                {categoryCardList.length > 0 && (
+                    <div className="card-categorized-counter">
+                        {`${categoryCardList.length} ${config.category.infoCounter}`}
+                    </div>
+                )}
             </div>
         </Draggable>
     );
