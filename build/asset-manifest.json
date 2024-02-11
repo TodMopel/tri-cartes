@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/tri-cartes/static/css/main.64056cfc.css",
-    "main.js": "/tri-cartes/static/js/main.af0e008c.js",
+    "main.css": "/tri-cartes/static/css/main.dc01719d.css",
+    "main.js": "/tri-cartes/static/js/main.8edc85a4.js",
     "static/media/Montserrat-Italic-VariableFont_wght.ttf": "/tri-cartes/static/media/Montserrat-Italic-VariableFont_wght.7451547bd28d8dddbeea.ttf",
     "static/media/Montserrat-VariableFont_wght.ttf": "/tri-cartes/static/media/Montserrat-VariableFont_wght.7e687123cd4528224ce5.ttf",
     "static/media/GloriaHallelujah-Regular.ttf": "/tri-cartes/static/media/GloriaHallelujah-Regular.c9da976c6f9088d1b3c9.ttf",
     "index.html": "/tri-cartes/index.html",
-    "main.64056cfc.css.map": "/tri-cartes/static/css/main.64056cfc.css.map",
-    "main.af0e008c.js.map": "/tri-cartes/static/js/main.af0e008c.js.map"
+    "main.dc01719d.css.map": "/tri-cartes/static/css/main.dc01719d.css.map",
+    "main.8edc85a4.js.map": "/tri-cartes/static/js/main.8edc85a4.js.map"
   },
   "entrypoints": [
-    "static/css/main.64056cfc.css",
-    "static/js/main.af0e008c.js"
+    "static/css/main.dc01719d.css",
+    "static/js/main.8edc85a4.js"
   ]
 }
