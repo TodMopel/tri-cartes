@@ -106,7 +106,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                     left: position.x + 'px',
                     top: position.y + 'px',
 
-                    backgroundColor: thisColor,
+                    borderColor: thisColor,
                 }}
             >
                 <div
@@ -182,7 +182,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                         >
                         </div>
                 </Droppable>
-                {categoryCardList.length > 0 && (
+                {categoryCardList.length > 1 && (
                     <div className="card-categorized-counter">
                         {`${categoryCardList.length} ${config.category.infoCounter}`}
                     </div>

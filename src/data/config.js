@@ -40,9 +40,7 @@
         createButtonText: "créer catégorie",
         infoCounter: "cartes",
         categoryColors: [
-            '#AED6F1', '#C3E6CB', '#E6E6FA', '#87CEEB', '#98FB98',
-            '#DDA0DD', '#B0E0E6', '#98FB98', '#FFE4C4', '#D8BFD8',
-            '#C4E17F', '#ADD8E6', '#F0FFF0', '#E0FFFF', '#FFCCCC'
+            '#D8BFD8', '#FFB6C1', '#DDA0DD', '#87CEFA', '#B5A3C2', '#87CEEB', '#A88BA0', '#6495ED', '#FFCCCB', '#B0E0E6', '#F4A460', '#A785CC', '#E7C7D3', '#DF8D92', '#ADD8E6'
         ],
         size: ({ x: 130, y: 150 }),
     },
