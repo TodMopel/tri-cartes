@@ -3,10 +3,12 @@
         title: "Bienvenue dans le jeu des 100 métiers",
         subTitle: "By Sophie Luksenberg",
         buttonStart: "commencer",
+        buttonResume: "partie en cours ? repprendre",
         titleUpdateList: "Coller l'URL du Google Sheet",
         subTitleUpdateList: "url par défaut déjà renseigné",
         buttonUpdateList: "valider",
         infoUpdateList: "cartes",
+        baseURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTkgehXkm0L0iail_fSR8ElGYAiVZU0isN8-N-YV_f2MRhzhDY_Lg99gr7o-_pYx-nHVLukVxYIYiaS/pub?gid=0&single=true&output=csv",
     },
     result: {
         title: "Vous avez trié les métiers",
@@ -18,13 +20,13 @@
         size: ({ x: 120, y: 80 }),
     },
     pile: {
-        title: "DECK",
+        title: "PIOCHE",
         buttonText: "piocher",
 
         size: ({ x: 130, y: 110 }),
     },
     discard: {
-        title: "POUBELLE",
+        title: "CORBEILLE",
         buttonText: "annuler",
 
         size: ({ x: 130, y: 150 }),

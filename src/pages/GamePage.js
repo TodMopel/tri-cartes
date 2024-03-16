@@ -10,20 +10,8 @@ import './../App.css';
 import config from './../data/config';
 
 const GamePage = ({ jobListData, onResultSubmit }) => {
-
-    const [gameData, setGameData] = useState({
-        jobList: [],
-        cardList: [],
-        discardedCardsList: [],
-        categoryList: [],
-        infoPanelCard: null,
-        selectedCardIndex: null,
-        lastSelectedCardIndex: null,
-        cardMoving: false,
-        selectedCategoryIndex: null,
-        lastSelectedCategoryIndex: null,
-        categoryMoving: false,
-    });
+    const [gameData, setGameData] = useState(loadGameState() || getDefaultGameData());
+    
     const [mouseCoordinates, setMouseCoordinates] = useState({ x: 0, y: 0 });
     const [zIndexOrder, setZIndexOrder] = useState(1);
 
@@ -33,11 +21,38 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     const newCategoryPosition = ({ x: window.innerWidth / 2 - config.category.size.x / 2, y: 80 });
 
     useEffect(() => {
-        setGameData(prevGameData => ({
-            ...prevGameData,
-            jobList: jobListData || [],
-        }));
-    }, [jobListData]);
+        saveGameState(gameData);
+    }, [gameData]);
+
+    function getDefaultGameData() {
+        return {
+            jobList: jobListData,
+            cardList: [],
+            discardedCardsList: [],
+            categoryList: [],
+            infoPanelCard: null,
+            selectedCardIndex: null,
+            lastSelectedCardIndex: null,
+            cardMoving: false,
+            selectedCategoryIndex: null,
+            lastSelectedCategoryIndex: null,
+            categoryMoving: false,
+        };
+    }
+
+    function saveGameState(gameState) {
+        localStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
+    function loadGameState() {
+        const savedState = localStorage.getItem('gameState');
+        return savedState ? JSON.parse(savedState) : null;
+    }
+
+    function clearGameState() {
+        localStorage.removeItem('gameState');
+    }
+
     const handleCardDropOnDroppable = (item) => {
         const droppedCard = gameData.cardList[gameData.lastSelectedCardIndex];
 
@@ -180,7 +195,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
         const { categoryList } = gameData;
 
         const newCategory = {
-            position: { x: newCategoryPosition.x, y: newCategoryPosition.y },
+            position: { x: newCategoryPosition.x + getRandomOffset() / 2, y: newCategoryPosition.y + getRandomOffset()},
             text: config.category.baseTitle + " " +(categoryList.length + 1),
 
             categoryCardList: [],
@@ -194,6 +209,9 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             categoryList: [...prevGameData.categoryList, newCategory],
         }));
     }
+    const getRandomOffset = () => {
+        return Math.random() * 30;
+    };
 
     const handleDeleteCategory = (droppedCategory) => {
         const droppedCardList = droppedCategory.categoryCardList;
@@ -290,14 +308,15 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
     const generateResultTable = () => {
         const resultTable = gameData.categoryList
-            .filter((category) => category.isActive)
-            .map((category) => ({
-                categoryName: category.text,
-                jobs: category.categoryCardList.map((card) => ({
-                    text: card.text,
-                    isActive: true,
-                })),
-            }));
+        .filter((category) => category.isActive)
+        .map((category) => ({
+            categoryName: category.text,
+            jobs: category.categoryCardList.map((card) => ({
+                text: card.text,
+                isActive: true,
+            })),
+        }));
+        clearGameState();
         onResultSubmit(resultTable);
     };
 

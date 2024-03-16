@@ -10,10 +10,14 @@ const CardPile = ({ position, onDragStart, addCard, counter, zIndexOrder }) => {
     const handleAddCard = () => {
         const rect = cardPileRef.current.getBoundingClientRect();
         const pilePosition = {
-            x: rect.left + rect.width / 2,
-            y: rect.top,
+            x: rect.left + rect.width / 2 + getRandomOffset(),
+            y: rect.top + getRandomOffset(),
         };
         addCard(pilePosition);
+    };
+    
+    const getRandomOffset = () => {
+        return Math.random() * 28 - 28;
     };
 
     return (

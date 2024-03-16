@@ -6,10 +6,18 @@ import './../App.css';
 
 import config from './../data/config';
 
-const HomePage = ({ onGoogleSheetSubmit }) => {
-    const [googleSheetURL, setGoogleSheetURL] = useState('https://docs.google.com/spreadsheets/d/e/2PACX-1vShvPU2v2t8mBqaitqTAFpNlcNPkdIxWnBlrSVguu0z_GbY_vHCyNWPuSfG2XhomHE4muU9UhBNKy3O/pub?output=csv');
+const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
+    const [googleSheetURL, setGoogleSheetURL] = useState(config.home.baseURL);
     const [extractionCount, setExtractionCount] = useState(null);
     const [errorMessages, setErrorMessages] = useState([]);
+    const [localStorageDetected, setLocalStorageDetected] = useState(false);
+
+    useEffect(() => {
+        const isLocalStorageDetected = localStorage.getItem('gameState');
+        setLocalStorageDetected(!!isLocalStorageDetected);
+
+        fetchGoogleSheetData();
+    }, []);
 
     const handleURLChange = (event) => {
         setGoogleSheetURL(event.target.value);
@@ -57,16 +65,40 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
         fetchGoogleSheetData();
     };
 
+    const handleStartSubmit = () => {
+        localStorage.removeItem('gameState');
+        onStartGameSubmit();
+    };
+
+    const handleResumeSubmit = () => {
+        onStartGameSubmit();
+    };
+
     return (
         <div className="background-grid home-page center-content">
             <div className="center-content">
                 <h1>{config.home.title}</h1>
                 <h3>{config.home.subTitle}</h3>
                 <div className="ui-card ui-button-container">
-                    <Link to="/tri-cartes/game" className="button button-normal">
+                    <Link
+                    
+                        onClick={handleStartSubmit}
+                        to="/tri-cartes/game"
+                        className="button button-normal"
+                    >
                         {config.home.buttonStart}
                     </Link>
                 </div>
+
+                {localStorageDetected && ( // Affichage conditionnel du bouton de reprise
+                    <Link
+                        onClick={handleResumeSubmit}
+                        to="/tri-cartes/game"
+                        className="button button-small"
+                    >
+                        {config.home.buttonResume}
+                    </Link>
+                )}
             </div>
             <div className="option-menu ui-card">
                 <h2>{`${config.home.titleUpdateList}`}</h2>
@@ -84,6 +116,7 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
                     </div>
                 </div>
             </div>
+            <div>
             {extractionCount !== null && (
                 <div className={`ui-card info-box success`}>
                     {`${extractionCount} ${config.home.infoUpdateList}`}
@@ -98,6 +131,7 @@ const HomePage = ({ onGoogleSheetSubmit }) => {
                     </ul>
                 </div>
             )}
+            </div>
         </div>
     );
 };

@@ -13,13 +13,13 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, categoryMovi
     const [isDropZoneActive, setIsDropZoneActive] = useState(false);
 
     const handleCardEnter = () => {
-        console.log(`Card entered discard dropZone, card : ${cardMoving}, category : ${categoryMoving}`);
+        // console.log(`Card entered discard dropZone, card : ${cardMoving}, category : ${categoryMoving}`);
         if (cardMoving || categoryMoving)
             setIsDropZoneActive(true);
     };
 
     const handleCardLeave = () => {
-        console.log(`Card left discard dropZone!`);
+        // console.log(`Card left discard dropZone!`);
         if (cardMoving || categoryMoving)
             setIsDropZoneActive(false);
     };
