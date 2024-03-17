@@ -5,7 +5,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
     const [dragStartX, setDragStartX] = useState(0);
     const [dragStartY, setDragStartY] = useState(0);
     const [currentOffset, setCurrentOffset] = useState({ x: 0, y: 0 });
-    const [scale, setScale] = useState(1);
 
     const targetRef = useRef(null);
 

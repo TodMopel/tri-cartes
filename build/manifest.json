@@ -1,6 +1,6 @@
 {
-  "short_name": "Jeu des 100 métiers",
-  "name": "Sophie Luksenberg, le jeu des 100 métiers",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "logo.ico",

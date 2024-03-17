@@ -81,7 +81,6 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 <h3>{config.home.subTitle}</h3>
                 <div className="ui-card ui-button-container">
                     <Link
-                    
                         onClick={handleStartSubmit}
                         to="/tri-cartes/game"
                         className="button button-normal"
