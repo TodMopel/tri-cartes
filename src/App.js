@@ -11,13 +11,13 @@ function App() {
     const [activePage, setActivePage] = useState(window.location.pathname);
     useEffect(() => {
         console.log('Active Page:', activePage);
-        if (activePage == "/tri-cartes/game")
+        if (activePage == "/game")
             navigateToHomePage();
     }, [activePage]);
 
     const navigateToHomePage = () => {
         // Utilisez le composant Navigate de react-router-dom pour la redirection
-        return <Navigate to="/tri-cartes/" />;
+        return <Navigate to="/" />;
     };
 
     const handleGoogleSheetSubmit = (data) => {
@@ -26,26 +26,26 @@ function App() {
 
     const handleEndGameSubmit = (data) => {
         setResultData(data);
-        setActivePage('/tri-cartes/result');
+        setActivePage('/result');
     };
 
     const handleStartGameSubmit = () => {
-        setActivePage('/tri-cartes/game');
+        setActivePage('/game');
     };
 
     return (
         <Router>
             <Routes>
                 <Route
-                    path="/tri-cartes/"
+                    path="/"
                     element={<HomePage onGoogleSheetSubmit={handleGoogleSheetSubmit} onStartGameSubmit={handleStartGameSubmit} />}
                 />
                 <Route
-                    path="/tri-cartes/game"
+                    path="/game"
                     element={<GamePage jobListData={jobListData} onResultSubmit={handleEndGameSubmit} />}
                 />
                 <Route
-                    path="/tri-cartes/result"
+                    path="/result"
                     element={<ResultPage resultData={resultData} />}
                 />
             </Routes>

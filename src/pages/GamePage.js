@@ -414,7 +414,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                 <div className="ui-button-container ui-end-game-button">
                     <Link
                         onClick={generateResultTable}
-                        to="/tri-cartes/result"
+                        to="/result"
                         className="button button-normal"
                     >
                         {config.result.endGameButton}
