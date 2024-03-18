@@ -82,7 +82,7 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 <div className="ui-card ui-button-container">
                     <Link
                         onClick={handleStartSubmit}
-                        to="/tri-cartes/game"
+                        to="/game"
                         className="button button-normal"
                     >
                         {config.home.buttonStart}
@@ -92,7 +92,7 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 {localStorageDetected && ( // Affichage conditionnel du bouton de reprise
                     <Link
                         onClick={handleResumeSubmit}
-                        to="/tri-cartes/game"
+                        to="/game"
                         className="button button-small"
                     >
                         {config.home.buttonResume}
