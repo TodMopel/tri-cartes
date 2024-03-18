@@ -73,7 +73,7 @@ const ResultPage = ({ resultData }) => {
                             />
                         ))}
                 </ul>
-                <div className="ui-card ui-button-container">
+                <div className="ui-card ui-button-container ui-end-button">
                     <Link to="/" className="button button-normal">
                         Retourner à l'accueil
                     </Link>

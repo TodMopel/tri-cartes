@@ -237,6 +237,12 @@ h1 {
     left: 50%;
     transform: translate(-50%, 0%);
 }
+.ui-end-button {
+    border-radius: 0px 0px 5px 5px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
 
 .ui-end-game-button {
     border-radius: 5px 5px 0px 0px;
