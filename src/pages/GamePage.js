@@ -400,17 +400,18 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                     />)
             ))}
 
+            {gameData.jobList.length === 0 && (
             <div
-                className="ui-button-container ui-add-category-button"
+            className="ui-button-container ui-add-category-button"
             >
-                <div
-                    className="button button-normal"
-                    onClick={handleAddCategory}
-                >
-                    {config.category.createButtonText}
-                </div>
+            <div
+                className="button button-normal"
+                onClick={handleAddCategory}
+            >
+                {config.category.createButtonText}
             </div>
-            {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive && gameData.infoPanelCard === null) && (
+        </div>
+            )}{gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive && gameData.infoPanelCard === null) && (
                 <div className="ui-button-container ui-end-game-button">
                     <Link
                         onClick={generateResultTable}
