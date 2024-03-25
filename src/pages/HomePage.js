@@ -89,7 +89,7 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                     </Link>
                 </div>
 
-                {localStorageDetected && ( // Affichage conditionnel du bouton de reprise
+                {localStorageDetected && (
                     <Link
                         onClick={handleResumeSubmit}
                         to="/game"

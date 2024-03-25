@@ -16,7 +16,6 @@ function App() {
     }, [activePage]);
 
     const navigateToHomePage = () => {
-        // Utilisez le composant Navigate de react-router-dom pour la redirection
         return <Navigate to="/" />;
     };
 
