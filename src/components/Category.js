@@ -20,6 +20,61 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
 
     const [categoryName, setCategoryName] = useState(text);
 
+    const columnLimit = 10;
+    const cardWidth = 120;
+
+    const renderCategoryColumns = () => {
+        const columns = [];
+        const totalCards = categoryCardList.length;
+    
+        const totalColumns = Math.ceil(totalCards / columnLimit);
+    
+        for (let i = 0; i < totalColumns; i++) {
+            const columnCards = categoryCardList.slice(i * columnLimit, (i + 1) * columnLimit);
+            const columnContent = columnCards.map((card, index) => (
+                <div
+                    className="card-container card-categorized-container"
+                    key={index}
+                >
+                    <div
+                        className="card card-txt card-categorized-txt"
+                        onClick={() => handleCategoryCardClick(categoryIndex, i * columnLimit + index)}
+                    >
+                        {card.text}
+                    </div>
+                </div>
+            ));
+    
+            columns.push(
+                <div className="category-column" key={i}>
+                    {columnContent}
+                </div>
+            );
+        }
+        return (
+            <div className="category-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalColumns}, 1fr)` }}>
+                {columns}
+            </div>
+        );
+    };
+
+    const calculateCategorySize = () => {
+        const titleHeight = categoryNameRef.current.getBoundingClientRect().height;
+        const totalCards = categoryCardList.length;
+        
+        if (totalCards === 0) {
+            return { x: config.category.size.x, y: 120 + titleHeight };
+        }
+    
+        const totalColumns = Math.ceil(totalCards / columnLimit);
+        const totalRows = totalCards < columnLimit ?totalCards: columnLimit;
+    
+        const totalHeight = 120 + totalRows * 30 + titleHeight;
+    
+        const totalWidth = totalColumns * (cardWidth) + 20;
+        return { x: totalWidth, y: totalHeight };
+    };
+
     const handleCardEnter = () => {
         setIsDropZoneActive(true);
     };
@@ -39,7 +94,8 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
     }, [cardMoving]);
 
     useEffect(() => {
-        setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + categoryNameHeight }));
+        const newSize = calculateCategorySize();
+        setThisSize(newSize);
     }, [categoryCardList]);
 
     const handleRenameClick = () => {
@@ -57,7 +113,9 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
         setTimeout(() => {
             const inputHeight = categoryNameRef.current.getBoundingClientRect().height;
             setCategoryNameHeight(inputHeight);
-            setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + inputHeight }));
+            
+            const newSize = calculateCategorySize();
+            setThisSize(newSize);
             updateCategoryText(categoryName);
         }, 0);
     };
@@ -76,7 +134,8 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
         };
 
         onCardRestored(position, categoryIndex, index);
-        setThisSize((prevSize) => ({ ...prevSize, y: 120 + categoryCardList.length * 30 + categoryNameHeight }));
+        const newSize = calculateCategorySize();
+        setThisSize(newSize);
     }
 
     const getRandomColor = () => {
@@ -143,28 +202,8 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                             </div>
                         )}
                 </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    {categoryCardList.map((card, index) => (
-                        <div
-                            className="card-container card-categorized-container"
-                            key={index}
-                        >
-                            <div
-                                className="card card-txt card-categorized-txt"
-                                onClick={() => handleCategoryCardClick(categoryIndex, index)}
-                            >
-                                {card.text}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+
+                {renderCategoryColumns()}
                 <Droppable
                     cardMoving={cardMoving}
                     mousePosition={mousePosition}

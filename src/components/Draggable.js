@@ -10,6 +10,7 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
     const mapBorderSize = 30;
 
+
     useEffect(() => {
         const handleMove = (e) => {
             if (isDragging) {
@@ -27,14 +28,16 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
 
                 if (onDragMove)
                     onDragMove();
+
             }
         };
 
         const handleUp = () => {
             setIsDragging(false);
 
-            if (onDragEnd)
+            if (onDragEnd){
                 onDragEnd();
+            }
 
             window.removeEventListener('mousemove', handleMove);
             window.removeEventListener('mouseup', handleUp);
@@ -78,7 +81,6 @@ const Draggable = ({ initialPosition, size, children, onDragStart, onDragEnd, on
                 });
             }
         }
-
         if (onDragStart)
             onDragStart();
     };
