@@ -51,6 +51,8 @@ const InfoPanel = ({ position, onDragStart, cardMoving, mousePosition, onCardDro
             zIndexOrder={zIndexOrder}
         >
             <div
+                id="InfoPanel"
+
                 ref={infoPanelRef}
                 className="column-content info-container"
                 style={{

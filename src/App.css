@@ -69,10 +69,7 @@ h1, h2, h3 {
     height: 100vh;
 }
 
-body, html {
-    overflow: hidden;
-    height: 100vh;
-}
+
 
 .game-page {
     overflow: hidden;
@@ -111,10 +108,6 @@ h1 {
 }
 
 .option-menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 15px;
     padding: 10px;
     border: 3px solid var(--text);
     background-color: var(--background);
@@ -181,7 +174,6 @@ h1 {
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
 }
@@ -220,6 +212,11 @@ h1 {
         color: #fff;
     }
 
+.cartes-counter {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
 /* Game Elements */
 .unselectable {
     overflow:hidden;
@@ -229,13 +226,30 @@ h1 {
     -ms-user-select: none;
     user-select: none;
 }
-
+.ui-menu-container{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
 .ui-add-category-button {
     border-radius: 0px 0px 5px 5px;
+}
+.ui-add-card-button {
+    border-radius: 0px 0px 5px 5px;
+}
+.ui-tooltip-container {
     position: absolute;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0%);
+    border-radius: 5px 0px 0px 5px;
+    top: 10%;
+    right: 0%;
+    display: flex;
+    flex-direction: column;
+    font-size: x-small;
+}
+.ui-tooltip-arrow{
+    position: absolute;
+    transform: translate(-130%, 0%);
 }
 .ui-end-button {
     border-radius: 0px 0px 5px 5px;
@@ -317,14 +331,21 @@ h1 {
     font-weight: 700;
     word-break: break-word;
 }
-.rename-icon {
+.rename-icon-category {
     width: 18px;
     height: 18px;
+}
+.rename-icon-card {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    width: 10px;
+    height: 10px;
 }
 
 .card-categorized-container {
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5);
-    border-bottom: none;
+    border-bottom: rgba(50, 50, 50);
     width: 120px;
     height: 25px;
 }

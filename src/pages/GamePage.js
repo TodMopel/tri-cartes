@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './../components/Card';
 import CardPile from './../components/CardPile';
@@ -6,10 +6,14 @@ import Category from './../components/Category';
 import CardDiscard from './../components/CardDiscard';
 import InfoPanel from './../components/InfoPanel';
 import './../App.css';
+import html2canvas from 'html2canvas';
 
 import config from './../data/config';
 
-const GamePage = ({ jobListData, onResultSubmit }) => {
+import ArrowIconL from './../images/ArrowL.png';
+import ArrowIconR from './../images/ArrowR.png';
+
+const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
     const [gameData, setGameData] = useState(loadGameState() || getDefaultGameData());
     
     const [mouseCoordinates, setMouseCoordinates] = useState({ x: 0, y: 0 });
@@ -18,7 +22,10 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
     const pilePosition = ({ x: window.innerWidth / 2 - 55, y: window.innerHeight / 2 - 40 });
     const discardPosition = ({ x: 110, y: 80 });
     const infoPanelPosition = ({ x: 110, y: window.innerHeight - 280 });
-    const newCategoryPosition = ({ x: window.innerWidth / 2 - config.category.size.x / 2, y: 80 });
+
+    const gameContainerRef = useRef(null);
+    const [tooltipOpen, setTooltipOpen] = useState(true);
+
 
     useEffect(() => {
         saveGameState(gameData);
@@ -26,6 +33,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
     function getDefaultGameData() {
         return {
+            candidatName : candidatName,
             jobList: jobListData,
             cardList: [],
             discardedCardsList: [],
@@ -46,6 +54,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
     function loadGameState() {
         const savedState = localStorage.getItem('gameState');
+        console.log(savedState);
         return savedState ? JSON.parse(savedState) : null;
     }
 
@@ -111,6 +120,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             description: selectedJob.description,
             isActive: true,
             zIndex: zIndexOrder,
+            canRename: false,
         };
 
         const updatedJobList = jobList.filter((_, index) => index !== randomIndex);
@@ -119,6 +129,47 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             ...prevGameData,
             cardList: [...prevGameData.cardList, newCard],
             jobList: updatedJobList,
+        }));
+    };
+
+    const handleCreateCard = () => {
+        const cardWidth = config.card.size.x;
+        const rect = document.getElementById('AddCardButton').getBoundingClientRect();
+        const newCardPosition = {
+            x: rect.left + 50 + Math.random() * 70,
+            y: rect.bottom + Math.random() * 50
+        };
+
+        const newCard = {
+            position: { x: newCardPosition.x - cardWidth / 2 , y: newCardPosition.y },
+            text: "Nouveau métier",
+            description: `Carte crée par ${gameData.candidatName}.`,
+            isActive: true,
+            zIndex: zIndexOrder,
+            canRename: true,
+        };
+
+        setGameData((prevGameData) => ({
+            ...prevGameData,
+            cardList: [...prevGameData.cardList, newCard],
+        }));
+    };
+
+    const handleRenameCard = (index, newText) => {
+        setGameData((prevGameData) => ({
+            ...prevGameData,
+            cardList: prevGameData.cardList.map((card, i) =>
+                i === index ? { ...card, text: newText, canRename: true } : card
+            ),
+        }));
+    };
+    const handleRenameCardInputChange = (event, index) => {
+        const newText = event.target.value;
+        setGameData((prevGameData) => ({
+            ...prevGameData,
+            cardList: prevGameData.cardList.map((card, i) =>
+                i === index ? { ...card, text: newText } : card
+            ),
         }));
     };
 
@@ -134,6 +185,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             description: discardedCardsList[discardedCardsList.length - 1].description,
             isActive: true,
             zIndex: zIndexOrder,
+            canRename: discardedCardsList[discardedCardsList.length - 1].canRename,
         };
         const updatedDiscardedCardsList = discardedCardsList.filter((_, index) => index !== discardedCardsList.length - 1);
 
@@ -160,6 +212,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             description: restoredCard.description,
             isActive: true,
             zIndex: zIndexOrder,
+            canRename: restoredCard.canRename,
         };
 
         updatedCardList.push(newCard);
@@ -180,6 +233,7 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
             description: card.description,
             isActive: true,
             zIndex: zIndexOrder,
+            canRename: card.canRename,
         };
 
         updatedCardList.push(newCard);
@@ -193,6 +247,12 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
 
     const handleAddCategory = () => {
         const { categoryList } = gameData;
+
+        const rect = document.getElementById('AddCategoryButton').getBoundingClientRect();
+        const newCategoryPosition = {
+            x: rect.left + 20 + Math.random() * 70,
+            y: rect.bottom + Math.random() * 50
+        };
 
         const newCategory = {
             position: { x: newCategoryPosition.x + getRandomOffset() / 2, y: newCategoryPosition.y + getRandomOffset()},
@@ -320,11 +380,80 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
         onResultSubmit(resultTable);
     };
 
+
+    const handleToolTip = () => {
+        setTooltipOpen(prevPosition => !prevPosition);
+        const tooltipContainer = document.getElementById('ToolTip');
+        console.log(tooltipContainer);
+        if (tooltipContainer) {
+            tooltipContainer.style.transform = tooltipOpen ? 'translate(0%, 0%)' : `translate(158px, 0%)`;
+        }
+    }
+
+    const handleScreenShot = () => {
+        const elementIdsToHide = ['CardPile', 'CardDiscard', 'AddCategoryButton', 'AddCardButton', 'ToolTip'];
+
+        if (gameData.infoPanelCard == null) {
+            elementIdsToHide.push('InfoPanel');
+        }
+
+        elementIdsToHide.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.visibility = 'hidden';
+            }
+        });
+
+        html2canvas(gameContainerRef.current).then(canvas => {
+            elementIdsToHide.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.visibility = 'visible';
+                }
+            });
+
+            document.body.appendChild(canvas);
+            
+            const date = new Date().toISOString().slice(0, 10);
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `SophieLuksenberg-Game_${date}_${gameData.candidatName}.png`;
+            link.click();
+        });
+    }
+    const handleFullScreen = () => {
+        // toggle fullscreen
+        if (!document.fullscreenElement) {
+            if (gameContainerRef.current.requestFullscreen) {
+                gameContainerRef.current.requestFullscreen();
+            } else if (gameContainerRef.current.mozRequestFullScreen) { /* Firefox */
+                gameContainerRef.current.mozRequestFullScreen();
+            } else if (gameContainerRef.current.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                gameContainerRef.current.webkitRequestFullscreen();
+            } else if (gameContainerRef.current.msRequestFullscreen) { /* IE/Edge */
+                gameContainerRef.current.msRequestFullscreen();
+            }
+            gameContainerRef.current.style.backgroundColor = 'white';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+            gameContainerRef.current.style.backgroundColor = '';
+        }
+    }
+
     return (
         <div
             className="unselectable game-page background-grid"
             onMouseMove={handleMouseMove}
             onTouchMove={handleTouchMove}
+            ref={gameContainerRef}
         >
             {gameData.jobList.length > -1 && (
                 <CardPile
@@ -394,22 +523,76 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                         text={card.text}
                         position={card.position}
                         zIndexOrder={card.zIndex}
+                        canRename={card.canRename}
 
                         onDragStart={() => handleDragStart(index, null)}
                         onDragEnd={() => handleDragEnd(index, null)}
+
+                        onCardRename={(newText) => handleRenameCard(index, newText)}
+                        onCardInputChange={(event) => handleRenameCardInputChange(event, index)}
                     />)
             ))}
 
             <div
-            className="ui-button-container ui-add-category-button"
+                className='ui-menu-container'
             >
-            <div
-                className="button button-normal"
-                onClick={handleAddCategory}
-            >
-                {config.category.createButtonText}
+                <div
+                    className="ui-button-container ui-add-category-button"
+                    id="AddCategoryButton"
+                >
+                    <div
+                        className="button button-normal"
+                        onClick={handleAddCategory}
+                    >
+                        {config.category.createButtonText}
+                    </div>
+                </div>
+                <div
+                className="ui-button-container ui-add-card-button"
+                    id="AddCardButton"
+                >
+                    <div
+                        className="button button-normal"
+                        onClick={handleCreateCard}
+                    >
+                        {config.card.createButtonText}
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div
+            className="ui-button-container ui-tooltip-container"
+            id="ToolTip"
+            style={{ transform: `translate(158px, 0%)` }}
+            >
+                <div
+                    className="ui-tooltip-arrow"
+                    onClick={handleToolTip}
+                > 
+                    <img src={tooltipOpen ? ArrowIconL : ArrowIconR} alt="Arrow" />
+                </div>
+
+                <div
+                    className="button button-normal"
+                    onClick={handleScreenShot}
+                >
+                    {config.tooltip.screenshotButtonText}
+                </div>
+                <div
+                    className="button button-normal"
+                    onClick={handleFullScreen}
+                >
+                    {config.tooltip.fullscreenButtonText}
+                </div>
+                <Link to="/">
+                <div
+                    className="button button-normal"
+                >
+                        {config.tooltip.quitButtonText}
+                </div>
+                    </Link>
+            </div>
+            
             {gameData.jobList.length === 0 && gameData.cardList.every((card) => !card.isActive && gameData.infoPanelCard === null) && (
                 <div className="ui-button-container ui-end-game-button">
                     <Link
@@ -421,6 +604,12 @@ const GamePage = ({ jobListData, onResultSubmit }) => {
                     </Link>
                 </div>
             )}
+
+            <div
+                className="cartes-counter"
+                >
+                    Session de {gameData.candidatName}. {gameData.cardList.filter(card => card.isActive).length + (gameData.infoPanelCard ? 1 : 0)} cartes, {gameData.categoryList.filter(category => category.isActive).length} catégories
+            </div>
         </div>
     );
 };

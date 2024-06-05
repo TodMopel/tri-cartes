@@ -6,6 +6,7 @@ import ResultPage from './pages/ResultPage';
 
 function App() {
     const [jobListData, setJobListData] = useState(null);
+    const [candidatName, setCandidatName] = useState(null);
     const [resultData, setResultData] = useState(null);
 
     const [activePage, setActivePage] = useState(window.location.pathname);
@@ -28,7 +29,8 @@ function App() {
         setActivePage('/result');
     };
 
-    const handleStartGameSubmit = () => {
+    const handleStartGameSubmit = (candidatName) => {
+        setCandidatName(candidatName);
         setActivePage('/game');
     };
 
@@ -41,7 +43,7 @@ function App() {
                 />
                 <Route
                     path="/game"
-                    element={<GamePage jobListData={jobListData} onResultSubmit={handleEndGameSubmit} />}
+                    element={<GamePage jobListData={jobListData} candidatName={candidatName} onResultSubmit={handleEndGameSubmit} />}
                 />
                 <Route
                     path="/result"

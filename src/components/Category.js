@@ -196,7 +196,7 @@ const Category = ({ categoryIndex, position, text, updateCategoryText, onDragSta
                                 <img
                                     src={editLineIcon}
                                     alt="Renommer"
-                                    className="rename-icon"
+                                    className="rename-icon-category"
                                     onClick={handleRenameClick}
                                 />
                             </div>

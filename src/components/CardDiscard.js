@@ -54,6 +54,8 @@ const CardDiscard = ({ position, onDragStart, onCancel, cardMoving, categoryMovi
             zIndexOrder={zIndexOrder}
         >
             <div
+                id="CardDiscard"
+
                 className="column-content discard-container"
                 ref={discardRef}
                 style={{

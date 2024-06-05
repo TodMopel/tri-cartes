@@ -28,6 +28,7 @@ const CardPile = ({ position, onDragStart, addCard, counter, zIndexOrder }) => {
             zIndexOrder={zIndexOrder}
         >
             <div
+                id="CardPile"
                 className="column-content pile-container"
                 ref={cardPileRef}
                 style={{
