@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Papa from 'papaparse';
@@ -16,8 +16,8 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
     const [errorMessages, setErrorMessages] = useState([]);
     const [localStorageDetected, setLocalStorageDetected] = useState(false);
 
-    const [tooltipOpen, setTooltipOpen] = useState(true);
-
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const tooltipRef = useRef(null);
 
     useEffect(() => {
         const isLocalStorageDetected = localStorage.getItem('gameState');
@@ -29,9 +29,10 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
     const handleURLChange = (event) => {
         setGoogleSheetURL(event.target.value);
     };
-    const handleCandidatNameChange = (event) =>{
+
+    const handleCandidatNameChange = (event) => {
         setCandidatName(event.target.value);
-    }
+    };
 
     useEffect(() => {
         fetchGoogleSheetData();
@@ -87,16 +88,22 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
 
     const handleToolTip = () => {
         setTooltipOpen(prevPosition => !prevPosition);
-        const tooltipContainer = document.getElementById('ToolTip');
+    };
+    useEffect(() => {
+        handleToolTip();
+    }, []);
+
+    useEffect(() => {
+        const tooltipContainer = tooltipRef.current;
         if (tooltipContainer) {
             const boundingRect = tooltipContainer.getBoundingClientRect();
             const dynamicPosition = boundingRect.width;
-            
+
             tooltipContainer.style.transform = tooltipOpen 
                 ? 'translate(0%, 0%)' 
                 : `translate(${dynamicPosition}px, 0%)`;
         }
-    }
+    }, [tooltipOpen]);
 
     return (
         <div className="background-grid home-page center-content">
@@ -104,14 +111,13 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 <h1>{config.home.title}</h1>
                 <h3>{config.home.subTitle}</h3>
                 <input
-                        className="input-field"
-                        type="text"
-                        value={candidatName}
-                        onChange={handleCandidatNameChange}
-                        placeholder="Sophie"
-                        style={{ width: `30%` }}
-
-                    />
+                    className="input-field"
+                    type="text"
+                    value={candidatName}
+                    onChange={handleCandidatNameChange}
+                    placeholder="Sophie"
+                    style={{ width: `30%` }}
+                />
                 <div className="ui-card ui-button-container">
                     <Link
                         onClick={handleStartSubmit}
@@ -133,33 +139,32 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 )}
             </div>
             <div>
-            {extractionCount !== null && (
-                <div className={`ui-card info-box success`}>
-                    {`${extractionCount} ${config.home.infoUpdateList}`}
-                </div>
-            )}
-            {errorMessages.length > 0 && (
-                <div className={`ui-card info-box error`}>
-                    <ul className="error-list">
-                        {errorMessages.map((errorMessage, index) => (
-                            <li key={index}>{errorMessage}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+                {extractionCount !== null && (
+                    <div className={`ui-card info-box success`}>
+                        {`${extractionCount} ${config.home.infoUpdateList}`}
+                    </div>
+                )}
+                {errorMessages.length > 0 && (
+                    <div className={`ui-card info-box error`}>
+                        <ul className="error-list">
+                            {errorMessages.map((errorMessage, index) => (
+                                <li key={index}>{errorMessage}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
 
-
             <div
-            className="ui-button-container ui-tooltip-container"
-            id="ToolTip"
-            style={{ transform: 'translate(308px, 0%)' }}
+                className="ui-button-container ui-tooltip-container"
+                id="ToolTip"
+                ref={tooltipRef}
             >
                 <div
                     className="ui-tooltip-arrow"
                     onClick={handleToolTip}
-                > 
-                    <img src={tooltipOpen ? ArrowIconL : ArrowIconR} alt="Arrow" />
+                >
+                    <img src={tooltipOpen ? ArrowIconR : ArrowIconL} alt="Arrow" />
                 </div>
 
                 <div className="option-menu ui-card">
@@ -180,11 +185,8 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
                 </div>
             </div>
 
-
-            <div
-                className="cartes-counter"
-                >
-                    Version 0.24
+            <div className="cartes-counter">
+                Version 0.24
             </div>
         </div>
     );

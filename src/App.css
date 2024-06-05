@@ -4,7 +4,7 @@
     --primary: #FFC900;
     --secondary: #FF990D;
     --accent: #FFFB0D;
-    --succes: #2AD453;
+    --succes: #10f445;
     --error: #FF260D;
     --discard: #F56D41;
     --info: #5788E7;
@@ -229,6 +229,7 @@ h1 {
 .ui-menu-container{
     position: absolute;
     width: 100%;
+    height: auto;
     display: flex;
     justify-content: space-around;
 }
@@ -236,6 +237,8 @@ h1 {
     border-radius: 0px 0px 5px 5px;
 }
 .ui-add-card-button {
+    font-size: smaller;
+    height: 0%;
     border-radius: 0px 0px 5px 5px;
 }
 .ui-tooltip-container {

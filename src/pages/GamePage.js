@@ -24,7 +24,8 @@ const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
     const infoPanelPosition = ({ x: 110, y: window.innerHeight - 280 });
 
     const gameContainerRef = useRef(null);
-    const [tooltipOpen, setTooltipOpen] = useState(true);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const tooltipRef = useRef(null);
 
 
     useEffect(() => {
@@ -380,15 +381,24 @@ const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
         onResultSubmit(resultTable);
     };
 
-
     const handleToolTip = () => {
         setTooltipOpen(prevPosition => !prevPosition);
-        const tooltipContainer = document.getElementById('ToolTip');
-        console.log(tooltipContainer);
+    };
+    useEffect(() => {
+        handleToolTip();
+    }, []);
+
+    useEffect(() => {
+        const tooltipContainer = tooltipRef.current;
         if (tooltipContainer) {
-            tooltipContainer.style.transform = tooltipOpen ? 'translate(0%, 0%)' : `translate(158px, 0%)`;
+            const boundingRect = tooltipContainer.getBoundingClientRect();
+            const dynamicPosition = boundingRect.width;
+
+            tooltipContainer.style.transform = tooltipOpen 
+                ? 'translate(0%, 0%)' 
+                : `translate(${dynamicPosition}px, 0%)`;
         }
-    }
+    }, [tooltipOpen]);
 
     const handleScreenShot = () => {
         const elementIdsToHide = ['CardPile', 'CardDiscard', 'AddCategoryButton', 'AddCardButton', 'ToolTip'];
@@ -552,7 +562,7 @@ const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
                     id="AddCardButton"
                 >
                     <div
-                        className="button button-normal"
+                        className="button button-small"
                         onClick={handleCreateCard}
                     >
                         {config.card.createButtonText}
@@ -561,15 +571,15 @@ const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
             </div>
 
             <div
-            className="ui-button-container ui-tooltip-container"
-            id="ToolTip"
-            style={{ transform: `translate(158px, 0%)` }}
+                className="ui-button-container ui-tooltip-container"
+                id="ToolTip"
+                ref={tooltipRef}
             >
                 <div
                     className="ui-tooltip-arrow"
                     onClick={handleToolTip}
                 > 
-                    <img src={tooltipOpen ? ArrowIconL : ArrowIconR} alt="Arrow" />
+                    <img src={tooltipOpen ? ArrowIconR : ArrowIconL} alt="Arrow" />
                 </div>
 
                 <div
