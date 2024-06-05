@@ -88,9 +88,13 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
     const handleToolTip = () => {
         setTooltipOpen(prevPosition => !prevPosition);
         const tooltipContainer = document.getElementById('ToolTip');
-        console.log(tooltipContainer);
         if (tooltipContainer) {
-            tooltipContainer.style.transform = tooltipOpen ? 'translate(0%, 0%)' : 'translate(308px, 0%)';
+            const boundingRect = tooltipContainer.getBoundingClientRect();
+            const dynamicPosition = boundingRect.width;
+            
+            tooltipContainer.style.transform = tooltipOpen 
+                ? 'translate(0%, 0%)' 
+                : `translate(${dynamicPosition}px, 0%)`;
         }
     }
 
