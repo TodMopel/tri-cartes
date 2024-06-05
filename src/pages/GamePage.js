@@ -24,7 +24,7 @@ const GamePage = ({ jobListData, onResultSubmit, candidatName }) => {
     const infoPanelPosition = ({ x: 110, y: window.innerHeight - 280 });
 
     const gameContainerRef = useRef(null);
-    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(true);
     const tooltipRef = useRef(null);
 
 

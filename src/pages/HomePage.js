@@ -16,7 +16,7 @@ const HomePage = ({ onGoogleSheetSubmit, onStartGameSubmit }) => {
     const [errorMessages, setErrorMessages] = useState([]);
     const [localStorageDetected, setLocalStorageDetected] = useState(false);
 
-    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(true);
     const tooltipRef = useRef(null);
 
     useEffect(() => {

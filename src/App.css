@@ -238,7 +238,7 @@ h1 {
 }
 .ui-add-card-button {
     font-size: smaller;
-    height: 0%;
+    height: 50%;
     border-radius: 0px 0px 5px 5px;
 }
 .ui-tooltip-container {
